@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User information</title>
+    <style>
+        body {
+            font-family: Verdana, Geneva, sans-serif;
+            font-size: 14px;
+            background: #f2f2f2;
+        }
+
+        .clearfix:after {
+            content: "";
+            display: block;
+            clear: both;
+            visibility: hidden;
+            height: 0;
+        }
+
+        .form_wrapper {
+            background: #fff;
+            width: 400px;
+            max-width: 100%;
+            box-sizing: border-box;
+            padding: 25px;
+            margin: 8% auto 0;
+            position: relative;
+            z-index: 1;
+            border-top: 5px solid #f5ba1a;
+            -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+            -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+            -webkit-transform-origin: 50% 0%;
+            transform-origin: 50% 0%;
+            -webkit-transform: scale3d(1, 1, 1);
+            transform: scale3d(1, 1, 1);
+            -webkit-transition: none;
+            transition: none;
+            -webkit-animation: expand 0.8s 0.6s ease-out forwards;
+            animation: expand 0.8s 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+        .form_wrapper h2 {
+            font-size: 1.5em;
+            line-height: 1.5em;
+            margin: 0;
+        }
+
+        .form_wrapper .title_container {
+            text-align: center;
+            padding-bottom: 15px;
+        }
+
+        .form_wrapper h3 {
+            font-size: 1.1em;
+            font-weight: normal;
+            line-height: 1.5em;
+            margin: 0;
+        }
+
+        .form_wrapper label {
+            font-size: 12px;
+        }
+
+        .form_wrapper .row {
+            margin: 10px -15px;
+        }
+
+        .form_wrapper .row>div {
+            padding: 0 15px;
+            box-sizing: border-box;
+        }
+
+        .form_wrapper .col_half {
+            width: 50%;
+            float: left;
+        }
+
+        .form_wrapper .input_field {
+            position: relative;
+            margin-bottom: 20px;
+            -webkit-animation: bounce 0.6s ease-out;
+            animation: bounce 0.6s ease-out;
+        }
+
+        .form_wrapper .input_field>span {
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: #333;
+            height: 100%;
+            border-right: 1px solid #ccc;
+            text-align: center;
+            width: 30px;
+        }
+
+        .form_wrapper .input_field>span>i {
+            padding-top: 10px;
+        }
+
+        .form_wrapper .textarea_field>span>i {
+            padding-top: 10px;
+        }
+
+        .form_wrapper input[type="text"],
+        .form_wrapper input[type="email"],
+        .form_wrapper input[type="password"],
+        .form_wrapper input[type="number"],
+        .form_wrapper input[type="date"] {
+            width: 100%;
+            padding: 8px 10px 9px 35px;
+            height: 35px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            outline: none;
+            -webkit-transition: all 0.3s ease-in-out;
+            -moz-transition: all 0.3s ease-in-out;
+            -ms-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .form_wrapper input[type="text"]:hover,
+        .form_wrapper input[type="email"]:hover,
+        .form_wrapper input[type="password"]:hover,
+        .form_wrapper input[type="number"]:hover,
+        .form_wrapper input[type="date"]:hover {
+            background: #fafafa;
+        }
+
+        .form_wrapper input[type="text"]:focus,
+        .form_wrapper input[type="email"]:focus,
+        .form_wrapper input[type="password"]:focus .form_wrapper input[type="number"]:focus,
+        .form_wrapper input[type="date"]:focus {
+            -webkit-box-shadow: 0 0 2px 1px rgba(255, 169, 0, 0.5);
+            -moz-box-shadow: 0 0 2px 1px rgba(255, 169, 0, 0.5);
+            box-shadow: 0 0 2px 1px rgba(255, 169, 0, 0.5);
+            border: 1px solid #f5ba1a;
+            background: #fafafa;
+        }
+
+        .form_wrapper input[type="submit"] {
+            background: #f5ba1a;
+            height: 35px;
+            line-height: 35px;
+            width: 100%;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            color: #fff;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            -webkit-transition: all 0.3s ease-in-out;
+            -moz-transition: all 0.3s ease-in-out;
+            -ms-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .form_wrapper input[type="submit"]:hover {
+            background: #e1a70a;
+        }
+
+        .form_wrapper input[type="submit"]:focus {
+            background: #e1a70a;
+        }
+
+        .form_wrapper input[type="checkbox"],
+        .form_wrapper input[type="radio"] {
+            border: 0;
+            clip: rect(0 0 0 0);
+            height: 1px;
+            margin: -1px;
+            overflow: hidden;
+            padding: 0;
+            position: absolute;
+            width: 1px;
+        }
+
+        .form_container .row .col_half.last {
+            border-left: 1px solid #ccc;
+        }
+
+        .checkbox_option label {
+            margin-right: 1em;
+            position: relative;
+        }
+
+        .checkbox_option label:before {
+            content: "";
+            display: inline-block;
+            width: 0.5em;
+            height: 0.5em;
+            margin-right: 0.5em;
+            vertical-align: -2px;
+            border: 2px solid #ccc;
+            padding: 0.12em;
+            background-color: transparent;
+            background-clip: content-box;
+            transition: all 0.2s ease;
+        }
+
+        .checkbox_option label:after {
+            border-right: 2px solid #000;
+            border-top: 2px solid #000;
+            content: "";
+            height: 20px;
+            left: 2px;
+            position: absolute;
+            top: 7px;
+            transform: scaleX(-1) rotate(135deg);
+            transform-origin: left top;
+            width: 7px;
+            display: none;
+        }
+
+        .checkbox_option input:hover+label:before {
+            border-color: #000;
+        }
+
+        .checkbox_option input:checked+label:before {
+            border-color: #000;
+        }
+
+        .checkbox_option input:checked+label:after {
+            -moz-animation: check 0.8s ease 0s running;
+            -webkit-animation: check 0.8s ease 0s running;
+            animation: check 0.8s ease 0s running;
+            display: block;
+            width: 7px;
+            height: 20px;
+            border-color: #000;
+        }
+
+        .radio_option label {
+            margin-right: 1em;
+        }
+
+        .radio_option label:before {
+            content: "";
+            display: inline-block;
+            width: 0.5em;
+            height: 0.5em;
+            margin-right: 0.5em;
+            border-radius: 100%;
+            vertical-align: -3px;
+            border: 2px solid #ccc;
+            padding: 0.15em;
+            background-color: transparent;
+            background-clip: content-box;
+            transition: all 0.2s ease;
+        }
+
+        .radio_option input:hover+label:before {
+            border-color: #000;
+        }
+
+        .radio_option input:checked+label:before {
+            background-color: #000;
+            border-color: #000;
+        }
+
+        .select_option {
+            position: relative;
+            width: 100%;
+        }
+
+        .select_option select {
+            display: inline-block;
+            width: 100%;
+            height: 35px;
+            padding: 0px 15px;
+            cursor: pointer;
+            color: #7b7b7b;
+            border: 1px solid #ccc;
+            border-radius: 0;
+            background: #fff;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            transition: all 0.2s ease;
+        }
+
+        .select_option select::-ms-expand {
+            display: none;
+        }
+
+        .select_option select:hover,
+        .select_option select:focus {
+            color: #000;
+            background: #fafafa;
+            border-color: #000;
+            outline: none;
+        }
+
+        .select_arrow {
+            position: absolute;
+            top: calc(50% - 4px);
+            right: 15px;
+            width: 0;
+            height: 0;
+            pointer-events: none;
+            border-width: 8px 5px 0 5px;
+            border-style: solid;
+            border-color: #7b7b7b transparent transparent transparent;
+        }
+
+        .select_option select:hover+.select_arrow,
+        .select_option select:focus+.select_arrow {
+            border-top-color: #000;
+        }
+
+        .credit {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 15px;
+            color: #f5ba1a;
+        }
+
+        .credit a {
+            color: #e1a70a;
+        }
+
+        @-webkit-keyframes check {
+            0% {
+                height: 0;
+                width: 0;
+            }
+
+            25% {
+                height: 0;
+                width: 7px;
+            }
+
+            50% {
+                height: 20px;
+                width: 7px;
+            }
+        }
+
+        @keyframes check {
+            0% {
+                height: 0;
+                width: 0;
+            }
+
+            25% {
+                height: 0;
+                width: 7px;
+            }
+
+            50% {
+                height: 20px;
+                width: 7px;
+            }
+        }
+
+        @-webkit-keyframes expand {
+            0% {
+                -webkit-transform: scale3d(1, 0, 1);
+                opacity: 0;
+            }
+
+            25% {
+                -webkit-transform: scale3d(1, 1.2, 1);
+            }
+
+            50% {
+                -webkit-transform: scale3d(1, 0.85, 1);
+            }
+
+            75% {
+                -webkit-transform: scale3d(1, 1.05, 1);
+            }
+
+            100% {
+                -webkit-transform: scale3d(1, 1, 1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes expand {
+            0% {
+                -webkit-transform: scale3d(1, 0, 1);
+                transform: scale3d(1, 0, 1);
+                opacity: 0;
+            }
+
+            25% {
+                -webkit-transform: scale3d(1, 1.2, 1);
+                transform: scale3d(1, 1.2, 1);
+            }
+
+            50% {
+                -webkit-transform: scale3d(1, 0.85, 1);
+                transform: scale3d(1, 0.85, 1);
+            }
+
+            75% {
+                -webkit-transform: scale3d(1, 1.05, 1);
+                transform: scale3d(1, 1.05, 1);
+            }
+
+            100% {
+                -webkit-transform: scale3d(1, 1, 1);
+                transform: scale3d(1, 1, 1);
+                opacity: 1;
+            }
+        }
+
+        @-webkit-keyframes bounce {
+            0% {
+                -webkit-transform: translate3d(0, -25px, 0);
+                opacity: 0;
+            }
+
+            25% {
+                -webkit-transform: translate3d(0, 10px, 0);
+            }
+
+            50% {
+                -webkit-transform: translate3d(0, -6px, 0);
+            }
+
+            75% {
+                -webkit-transform: translate3d(0, 2px, 0);
+            }
+
+            100% {
+                -webkit-transform: translate3d(0, 0, 0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes bounce {
+            0% {
+                -webkit-transform: translate3d(0, -25px, 0);
+                transform: translate3d(0, -25px, 0);
+                opacity: 0;
+            }
+
+            25% {
+                -webkit-transform: translate3d(0, 10px, 0);
+                transform: translate3d(0, 10px, 0);
+            }
+
+            50% {
+                -webkit-transform: translate3d(0, -6px, 0);
+                transform: translate3d(0, -6px, 0);
+            }
+
+            75% {
+                -webkit-transform: translate3d(0, 2px, 0);
+                transform: translate3d(0, 2px, 0);
+            }
+
+            100% {
+                -webkit-transform: translate3d(0, 0, 0);
+                transform: translate3d(0, 0, 0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .form_wrapper .col_half {
+                width: 100%;
+                float: none;
+            }
+
+            .bottom_row .col_half {
+                width: 50%;
+                float: left;
+            }
+
+            .form_container .row .col_half.last {
+                border-left: none;
+            }
+
+            .remember_me {
+                padding-bottom: 20px;
+            }
+        }
+
+        /* @import url(//db.onlinewebfonts.com/c/860c3ec7bbc5da3e97233ccecafe512e?family=Circular+Std+Book); */
+
+        @font-face {
+            font-family: "Custom";
+            src: url('./fonts/CircularStdBook.ttf')
+        }
+
+        body {
+            font-family: Custom;
+        }
+
+        .card {
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 200px;
+            width: 327px;
+            height: 208px;
+
+
+            /* Gradient */
+
+            background: linear-gradient(112.03deg, #C69DFF 0%, #4F76FF 100%);
+            border-radius: 16px;
+        }
+
+        .amount {
+            /* 338.34 */
+
+
+            position: absolute;
+            width: 100px;
+            height: 40px;
+            padding: 144px 180px 24px 47px;
+            font-family: Custom;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 32px;
+            line-height: 40px;
+            letter-spacing: 0.01em;
+
+            color: #FFFFFF;
+        }
+
+        .kurs {
+            /* ¥ */
+
+            position: absolute;
+            width: 11px;
+            height: 23px;
+            padding: 151px 284px 34px 32px;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 18px;
+            line-height: 23px;
+            font-family: Custom;
+            margin: -3px 0;
+            /* identical to box height */
+
+            letter-spacing: 0.01em;
+
+            color: #FFFFFF;
+        }
+
+        .balance {
+            /* Balance */
+
+
+            position: absolute;
+            width: 51px;
+            height: 18px;
+            padding: 126px 244px 64px 32px;
+            font-family: Circular Std;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 18px;
+            /* identical to box height */
+
+            letter-spacing: 0.01em;
+
+            color: #ffffff;
+            font-family: Custom;
+
+        }
+
+        .card-name {
+            position: absolute;
+            padding: 32px 234px 160px 32px;
+            width: 61px;
+            height: 16px;
+        }
+
+        .siluet-1 {
+            /* Ellipse 4 */
+            position: absolute;
+            width: 425px;
+            height: 171px;
+            border-radius: 600px / 200px;
+            margin: 98px -20px -61px -78px;
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .siluet-2 {
+            position: absolute;
+            width: 335px;
+            height: 259px;
+            border-radius: 50%;
+            margin: 64px 89px -115px -97px;
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .rectangle {
+            position: absolute;
+            width: 327px;
+            height: 208px;
+
+            background: linear-gradient(112.03deg, #C69DFF 0%, #4F76FF 100%);
+            border-radius: 16px;
+        }
+    </style>
+    <script src="https://use.fontawesome.com/cc3c889a1d.js"></script>
+</head>
+
+<body>
+    <div class="form_wrapper">
+        <div class="form_container">
+            <div class="title_container">
+                <h2>Queen of the black nation</h2>
+            </div>
+            <div class="row clearfix" style="text-align: center;">
+                <div class="" style="text-align: center;">
+                    <div style="font-size: 1.2rem; margin-bottom: 1rem;">
+                        pay NGN 20,000 to
+                    </div>
+                    <div style="font-size: 2rem; margin-bottom: 1rem;">
+                        <span style="margin-right: 1rem;">
+                            <i aria-hidden="true" class="fa fa-university"></i>
+                        </span>
+                        <div>2117041710</div>
+                        <div>Zenith Bank</div>
+                        <div>Opara Onyedikachi</div>
+                    </div>
+                    <p style="color: #f5ba1a; font-size: 16px;">Once payment have been completed, send a screenshot to
+                        support@dampearl.com</p>
+                </div>
+
+
+                <a href="https://dampearl.com/paypal-1">
+                    <div class="card">
+                        <div class="rectangle"></div>
+                        <div>
+                            <svg class="card-name" width="61" height="16" viewBox="0 0 61 16" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M7.31982 0.000702033H2.57515C2.41807 0.000604514 2.26613 0.0557284 2.14669 0.156141C2.02725 0.256554 1.94817 0.395654 1.9237 0.548377L0.00474099 12.5242C-0.00408105 12.5797 -0.000561886 12.6365 0.0150544 12.6906C0.0306708 12.7447 0.0580136 12.7949 0.0952013 12.8376C0.132389 12.8803 0.178538 12.9145 0.23047 12.938C0.282402 12.9615 0.338883 12.9736 0.396025 12.9735H2.66117C2.81835 12.9736 2.97038 12.9183 3.08983 12.8178C3.20928 12.7172 3.2883 12.578 3.31262 12.4251L3.83017 9.19508C3.85447 9.04235 3.93339 8.90318 4.0527 8.80265C4.17201 8.70211 4.32387 8.64682 4.48092 8.64672H5.98293C9.10835 8.64672 10.9121 7.15803 11.3832 4.20796C11.5955 2.91731 11.3922 1.90322 10.7782 1.19302C10.1039 0.413165 8.90785 0.000702033 7.31982 0.000702033ZM7.8672 4.37459C7.60773 6.05039 6.30692 6.05039 5.04912 6.05039H4.33315L4.83544 2.92072C4.85014 2.82916 4.89756 2.74577 4.96916 2.68556C5.04077 2.62534 5.13185 2.59226 5.22603 2.59225H5.55418C6.41098 2.59225 7.21922 2.59226 7.63687 3.07301C7.88593 3.35982 7.96224 3.78594 7.8672 4.37459ZM21.5025 4.32064H19.2304C19.1362 4.32064 19.0451 4.35373 18.9735 4.41394C18.9019 4.47415 18.8545 4.55755 18.8398 4.64911L18.7392 5.27463L18.5803 5.04791C18.0885 4.34522 16.9916 4.11031 15.8969 4.11031C13.3861 4.11031 11.2417 5.9821 10.824 8.6078C10.6069 9.91758 10.9156 11.17 11.6704 12.0434C12.3628 12.8465 13.3535 13.1811 14.5322 13.1811C16.5552 13.1811 17.6771 11.9007 17.6771 11.9007L17.5758 12.5221C17.5667 12.5777 17.5701 12.6345 17.5855 12.6887C17.6009 12.7428 17.6281 12.7931 17.6652 12.8359C17.7022 12.8788 17.7483 12.9132 17.8002 12.9368C17.852 12.9604 17.9085 12.9727 17.9657 12.9728H20.0123C20.1695 12.9729 20.3215 12.9177 20.4409 12.8171C20.5604 12.7166 20.6394 12.5773 20.6637 12.4244L21.8917 4.76998C21.9007 4.71454 21.8974 4.65784 21.882 4.60378C21.8666 4.54972 21.8395 4.49959 21.8025 4.45687C21.7655 4.41414 21.7195 4.37983 21.6677 4.35631C21.6159 4.33279 21.5595 4.32062 21.5025 4.32064ZM18.3354 8.67336C18.1162 9.95104 17.086 10.8087 15.772 10.8087C15.1122 10.8087 14.5849 10.6005 14.2464 10.2058C13.9106 9.81378 13.7829 9.25586 13.8898 8.63443C14.0944 7.36768 15.142 6.48197 16.4359 6.48197C17.0811 6.48197 17.6056 6.69299 17.9511 7.09111C18.2973 7.49333 18.4347 8.05466 18.3354 8.67336ZM33.6032 4.32064H31.32C31.2123 4.32081 31.1063 4.34683 31.0111 4.39646C30.916 4.44608 30.8346 4.5178 30.774 4.6054L27.625 9.17118L26.2902 4.78364C26.2492 4.64982 26.1655 4.53254 26.0516 4.44915C25.9376 4.36577 25.7994 4.32071 25.6575 4.32064H23.4138C23.3508 4.32048 23.2887 4.33512 23.2327 4.36335C23.1766 4.39159 23.1282 4.4326 23.0915 4.48297C23.0548 4.53333 23.0308 4.59161 23.0216 4.65293C23.0124 4.71426 23.0182 4.77686 23.0385 4.83554L25.5534 12.1001L23.189 15.3854C23.147 15.4437 23.1221 15.5122 23.117 15.5835C23.1119 15.6547 23.1268 15.726 23.1601 15.7895C23.1935 15.8529 23.2439 15.9062 23.3059 15.9433C23.3679 15.9804 23.4391 16.0001 23.5116 16H25.792C25.8985 16.0002 26.0034 15.9749 26.0978 15.9264C26.1922 15.8779 26.2732 15.8075 26.3339 15.7214L33.9278 4.93182C33.969 4.87345 33.9931 4.8051 33.9977 4.73418C34.0022 4.66326 33.9869 4.59248 33.9534 4.52952C33.92 4.46655 33.8696 4.4138 33.8079 4.37698C33.7462 4.34016 33.6754 4.32067 33.6032 4.32064Z"
+                                    fill="white" />
+                                <path
+                                    d="M41.1625 0.000682837H36.4171C36.2602 0.000748013 36.1084 0.0559454 35.9891 0.156344C35.8698 0.256742 35.7908 0.395751 35.7664 0.548358L33.8474 12.5241C33.8385 12.5796 33.8419 12.6363 33.8574 12.6904C33.8729 12.7444 33.9001 12.7946 33.9371 12.8373C33.9742 12.88 34.0202 12.9143 34.072 12.9378C34.1239 12.9613 34.1802 12.9735 34.2373 12.9735H36.6724C36.7823 12.9733 36.8885 12.9346 36.9719 12.8642C37.0553 12.7939 37.1105 12.6965 37.1275 12.5897L37.6721 9.19506C37.6964 9.04233 37.7754 8.90316 37.8947 8.80262C38.014 8.70209 38.1658 8.64679 38.3229 8.6467H39.8242C42.9503 8.6467 44.7534 7.15801 45.2252 4.20794C45.4382 2.91729 45.2335 1.9032 44.6195 1.193C43.9459 0.413146 42.7505 0.000682837 41.1625 0.000682837ZM41.7099 4.37457C41.4511 6.05037 40.1503 6.05037 38.8918 6.05037H38.1765L38.6795 2.9207C38.6939 2.82914 38.7412 2.74568 38.8127 2.68543C38.8842 2.62518 38.9752 2.59212 39.0694 2.59224H39.3975C40.2536 2.59224 41.0626 2.59224 41.4802 3.07299C41.7293 3.3598 41.8049 3.78592 41.7099 4.37457ZM55.3445 4.32062H53.0738C52.9796 4.32037 52.8884 4.35337 52.8169 4.41365C52.7453 4.47392 52.6981 4.55746 52.6839 4.64909L52.5833 5.27461L52.4237 5.04789C51.9318 4.3452 50.8357 4.11029 49.7409 4.11029C47.2302 4.11029 45.0864 5.98208 44.6688 8.60778C44.4523 9.91756 44.7597 11.17 45.5145 12.0434C46.2082 12.8465 47.1976 13.1811 48.3763 13.1811C50.3993 13.1811 51.5211 11.9007 51.5211 11.9007L51.4198 12.5221C51.4108 12.5778 51.4141 12.6347 51.4296 12.689C51.4452 12.7432 51.4725 12.7936 51.5097 12.8364C51.5469 12.8793 51.5931 12.9137 51.6452 12.9372C51.6972 12.9608 51.7538 12.9729 51.8111 12.9728H53.857C54.0141 12.9727 54.1659 12.9174 54.2852 12.8169C54.4046 12.7163 54.4835 12.5772 54.5078 12.4244L55.7364 4.76996C55.7451 4.71435 55.7415 4.65754 55.7258 4.60344C55.7101 4.54933 55.6827 4.49922 55.6455 4.45653C55.6082 4.41384 55.562 4.37959 55.5101 4.35613C55.4581 4.33267 55.4016 4.32055 55.3445 4.32062ZM52.1774 8.67334C51.9596 9.95102 50.9279 10.8087 49.6139 10.8087C48.9556 10.8087 48.4269 10.6004 48.0884 10.2057C47.7526 9.81376 47.6263 9.25584 47.7318 8.63441C47.9378 7.36766 48.984 6.48196 50.2779 6.48196C50.9231 6.48196 51.4476 6.69297 51.7931 7.09109C52.1406 7.49331 52.278 8.05464 52.1774 8.67334ZM58.0231 0.329151L56.0757 12.5241C56.0668 12.5796 56.0702 12.6363 56.0857 12.6904C56.1011 12.7444 56.1284 12.7946 56.1654 12.8373C56.2025 12.88 56.2485 12.9143 56.3003 12.9378C56.3521 12.9613 56.4085 12.9735 56.4656 12.9735H58.4234C58.7488 12.9735 59.0249 12.7413 59.0748 12.4251L60.9952 0.450022C61.0041 0.394513 61.0007 0.337762 60.9852 0.28367C60.9697 0.229578 60.9425 0.179428 60.9055 0.136668C60.8684 0.0939075 60.8224 0.0595504 60.7706 0.0359585C60.7188 0.0123666 60.6624 9.94553e-05 60.6053 0H58.413C58.3189 0.000328043 58.2279 0.0336313 58.1565 0.0939443C58.0851 0.154257 58.0378 0.237639 58.0231 0.329151Z"
+                                    fill="white" />
+                            </svg>
+                            <!--       <img src="Logo Paypal.svg" alt="" class="card-name"> -->
+                            <div class="balance">Amount</div>
+                            <div class="kurs">&#x20A6;</div>
+                            <div class="amount">20, 000</div>
+                            <div class="siluet-1"></div>
+                            <div class="siluet-2"></div>
+                            <img src="./Siluet.svg" alt="">
+                        </div>
+
+                    </div>
+                </a>
+                <p style="color: #f5ba1a; font-size: 16px;">Click to pay with paypal</p>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
